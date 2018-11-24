@@ -84,7 +84,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
                       scores=None, title="",
                       figsize=(16, 16), ax=None,
                       show_mask=True, show_bbox=True,
-                      colors=None, captions=None):
+                      colors=None, captions=None, save=False, path="./", name="None"):
     """
     boxes: [num_instance, (y1, x1, y2, x2, class_id)] in image coordinates.
     masks: [height, width, num_instances]
@@ -102,7 +102,9 @@ def display_instances(image, boxes, masks, class_ids, class_names,
     if not N:
         print("\n*** No instances to display *** \n")
     else:
-        assert boxes.shape[0] == masks.shape[-1] == class_ids.shape[0]
+        print('.')
+        #assert boxes.shape[0] == masks.shape[-1] == class_ids.shape[0]
+        #assert boxes.shape[0] == masks.shape[-1] == class_ids[0]
 
     # If no axis is passed, create one and automatically call show()
     auto_show = False
@@ -137,7 +139,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
 
         # Label
         if not captions:
-            class_id = class_ids[i]
+            class_id = class_ids[0] #class_ids[i]
             score = scores[i] if scores is not None else None
             label = class_names[class_id]
             x = random.randint(x1, (x1 + x2) // 2)
@@ -165,7 +167,10 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             ax.add_patch(p)
     ax.imshow(masked_image.astype(np.uint8))
     if auto_show:
-        plt.show()
+    	if(save):
+    		plt.savefig(path+name+'.png')
+    	plt.show()
+    
 
 
 def display_differences(image,
