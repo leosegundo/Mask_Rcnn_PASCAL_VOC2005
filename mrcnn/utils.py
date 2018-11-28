@@ -701,8 +701,8 @@ def compute_matches(gt_boxes, gt_class_ids, gt_masks,
             if iou < iou_threshold:
                 break
             # Do we have a match?
-            #if pred_class_ids[i] == gt_class_ids[0]:
-            if pred_class_ids[i] == gt_class_ids[j]:
+            #if pred_class_ids[i] == gt_class_ids[j]:
+            if pred_class_ids[i] == gt_class_ids[0]:
                 match_count += 1
                 gt_match[j] = i
                 pred_match[i] = j
